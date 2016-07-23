@@ -2,7 +2,7 @@ box:
   id: ymotongpoo/ubuntu-trusty:wercker
 
 build:
-  steps: 
+  steps:
     - script:
         name: confirm docker image version.
         code: |
