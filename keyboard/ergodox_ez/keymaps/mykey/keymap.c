@@ -94,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                   /*      ^^ LEFT ^^      /      vv RIGHT vv      */
                   , KC_F10  , KC_F11  , KC_F12  , KC_F13  , KC_F14   , KC_NO   , MO(BASE)
                   , KC_UP   , KC_F15  , KC_F16  , KC_MS_U , KC_NO    , KC_NO   , KC_NO
-                            , KC_NO   , KC_MS_L , KC_MS_D , KC_MS_R  , KC_NO   , KC_NO(JA_CLON)
+                            , KC_NO   , KC_MS_L , KC_MS_D , KC_MS_R  , KC_NO   , KC_RCTL
                   , KC_DOWN , KC_NO   , KC_NO   , KC_NO   , KC_NO    , KC_NO   , KC_RSFT
                                       , KC_ENT  , KC_BTN1 , KC_BTN1  , KC_BTN2 , KC_BTN2
                   , KC_HOME , KC_END
@@ -142,7 +142,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                  , KC_PGUP
                  , KC_PGDN , KC_LEFT  , KC_RGHT
                  )
-,
 };
 
 const uint16_t PROGMEM fn_actions[] = {
