@@ -48,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                  , KC_LSFT , KC_Z    , KC_X    , KC_C    , KC_V    , KC_B    , KC_BSPC
                  , KC_LALT , CL(KC_Z), CL(KC_X), CL(KC_V), CL(KC_C)
                                                                    , KC_ENT  , RESET
-                                                                             , KC_HOM
+                                                                             , KC_HOME
                                             , MT(MO(MEDI), KC_SPC) , KC_SPC  , KC_NO
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
                  , KC_NO   , KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_MINS
