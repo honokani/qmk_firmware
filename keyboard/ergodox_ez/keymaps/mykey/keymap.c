@@ -83,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
  *                                 |      |      |      |       | PgDn | Left   | Right
  *                                 `--------------------'       `----------------------'
  */
-, [MEDI] = KEYMAP( KC_GRV  , KC_F1   , KC_F6   , KC_F8   , KC_NO    , KC_NO   , KC_NO
+, [MEDI] = KEYMAP( KC_GRV  , KC_F1   , KC_F6   , KC_F8   , KC_F15   , KC_F16  , KC_NO
                  , KC_TAB  , KC_NO   , KC_NO   , KC_WH_U , KC_NO    , KC_NO   , KC_NO
                  , KC_LCTL , KC_NO   , KC_LEFT , KC_WH_D , KC_RGHT  , KC_NO
                  , KC_LSFT , KC_F2   , KC_F3   , KC_F4   , TC(KC_F5), KC_F7   , KC_F10
@@ -93,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                                                          , KC_TRNS  , KC_NO   , KC_NO
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
                  , KC_TRNS , KC_F10  , KC_F11  , KC_F12  , KC_F13  , KC_F14   , TG(BASE)
-                 , KC_UP   , KC_F15  , KC_F16  , KC_MS_U , KC_NO    , KC_NO   , KC_NO
+                 , KC_UP   , KC_NO   , KC_NO   , KC_MS_U , KC_NO    , KC_NO   , KC_NO
                            , KC_NO   , KC_MS_L , KC_MS_D , KC_MS_R  , KC_NO   , RESET
                  , KC_DOWN , KC_NO   , KC_NO   , KC_NO   , KC_NO    , KC_NO   , KC_NO
                                      , KC_ENT  , KC_BTN1 , KC_BTN1  , KC_BTN2 , KC_BTN2
@@ -146,7 +146,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 
 const uint16_t PROGMEM fn_actions[] = {
     [1] = ACTION_LAYER_TAP_TOGGLE(MEDI)                // MEDI - Momentary Layer 1 (medi)
-    [2] = ACTION_LAYER_TAP_TOGGLE(DRAW)                // DRAW - Momentary Layer 2 (draw)
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
