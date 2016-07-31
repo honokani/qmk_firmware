@@ -48,8 +48,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                  , KC_LSFT , KC_Z    , KC_X    , KC_C    , KC_V    , KC_B    , KC_BSPC
                  , KC_LALT , CL(KC_Z), CL(KC_C), CL(KC_V), CL(KC_X)
                                                                    , KC_ENT  , CL(KC_S)
-                                                                             , DF(DRAW)
-                                                , LT(MEDI, KC_SPC) , KC_SPC  , KC_NO
+                                                                             , TG(DRAW)
+                                               , LT(MEDI, KC_SPC) , KC_SPC  , KC_NO
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
                  , KC_NO   , KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_MINS
                  , KC_UP   , KC_Y    , KC_U    , KC_I    , KC_O    , KC_P    , JA_ENVL
@@ -90,9 +90,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                  , KC_LALT , CL(KC_Z), CL(KC_C), CL(KC_V), CL(KC_X)
                                                                     , KC_NO   , KC_NO
                                                                               , KC_NO
-                                                         , KC_NO    , KC_NO   , KC_NO
+                                                         , KC_TRNS  , KC_NO   , KC_NO
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , KC_F10  , KC_F11  , KC_F12  , KC_F13  , KC_F14   , KC_NO   , DF(BASE)
+                 , KC_F10  , KC_F11  , KC_F12  , KC_F13  , KC_F14   , KC_NO   , TG(BASE)
                  , KC_UP   , KC_F15  , KC_F16  , KC_MS_U , KC_NO    , KC_NO   , KC_NO
                            , KC_NO   , KC_MS_L , KC_MS_D , KC_MS_R  , KC_NO   , RESET
                  , KC_DOWN , KC_NO   , KC_NO   , KC_NO   , KC_NO    , KC_NO   , KC_NO
@@ -133,7 +133,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                                                                                 , KC_NO
                                                             , KC_DELT , KC_END  , KC_INS
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , DF(BASE)
+                 , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , TG(BASE)
                  , KC_UP   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
                            , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
                  , KC_DOWN , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
