@@ -51,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                                                                              , TG(DRAW)
                                                , LT(MEDI, KC_SPC) , KC_SPC  , KC_NO
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , KC_NO   , KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_MINS
+                 , TG(DRAW), KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_MINS
                  , KC_UP   , KC_Y    , KC_U    , KC_I    , KC_O    , KC_P    , JA_ENVL
                            , KC_H    , KC_J    , KC_K    , KC_L    , KC_SCLN , CTL_T(JA_CLON)
                  , KC_DOWN , KC_N    , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , SFT_T(JA_ENUN)
@@ -133,7 +133,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                                                                                 , KC_NO
                                                             , KC_DELT , KC_END  , KC_INS
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , TG(BASE)
+                 , TG(BASE), KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , TG(BASE)
                  , KC_UP   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
                            , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
                  , KC_DOWN , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
