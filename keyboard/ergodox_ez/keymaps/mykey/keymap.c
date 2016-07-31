@@ -166,9 +166,13 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
     ergodox_board_led_off();
-    ergodox_right_led_1_on(); ergodox_right_led_2_on(); ergodox_right_led_3_on();
+    ergodox_right_led_1_on();
+    ergodox_right_led_2_on();
+    ergodox_right_led_3_on();
     ergodox_board_led_off();
-    ergodox_right_led_1_on(); ergodox_right_led_2_on(); ergodox_right_led_3_on();
+    ergodox_right_led_1_on();
+    ergodox_right_led_2_on();
+    ergodox_right_led_3_on();
     ergodox_board_led_off();
 };
 
@@ -178,7 +182,9 @@ void matrix_scan_user(void) {
     uint8_t layer = biton32(layer_state);
 
     ergodox_board_led_off();
-    ergodox_right_led_1_off(); ergodox_right_led_2_off(); ergodox_right_led_3_off();
+    ergodox_right_led_1_off();
+    ergodox_right_led_2_off();
+    ergodox_right_led_3_off();
 
     switch (layer) {
       // TODO: Make this relevant to the ErgoDox EZ.
