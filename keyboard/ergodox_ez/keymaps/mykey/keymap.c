@@ -92,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                                                                               , KC_NO
                                                          , KC_TRNS  , KC_NO   , KC_NO
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , KC_F10  , KC_F11  , KC_F12  , KC_F13  , KC_F14   , KC_NO   , TG(BASE)
+                 , KC_TRNS , KC_F10  , KC_F11  , KC_F12  , KC_F13  , KC_F14   , TG(BASE)
                  , KC_UP   , KC_F15  , KC_F16  , KC_MS_U , KC_NO    , KC_NO   , KC_NO
                            , KC_NO   , KC_MS_L , KC_MS_D , KC_MS_R  , KC_NO   , RESET
                  , KC_DOWN , KC_NO   , KC_NO   , KC_NO   , KC_NO    , KC_NO   , KC_NO
@@ -126,18 +126,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
  */
 , [DRAW] = KEYMAP( KC_GRV  , KC_NO      , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_ESC
                  , KC_TAB  , KC_NO      , KC_UP   , CL(KC_L), KC_NO   , KC_NO   , KC_WH_D
-                 , KC_LCTL , AL(KC_DELT), JA_LBRC , KC_L    , CL(KC_Z), KC_E
-                 , KC_LSFT , KC_D       , JA_RBRC , AL(KC_L), CL(KC_Y), KC_MINS , KC_WH_U
+                 , KC_LCTL , AL(KC_DELT), JA_RBRC , KC_L    , CL(KC_Z), KC_E
+                 , KC_LSFT , KC_D       , JA_LBRC , AL(KC_L), CL(KC_Y), KC_MINS , KC_WH_U
                  , KC_LALT , CL(KC_Z)   , CL(KC_C), CL(KC_V), CL(KC_X)
                                                                       , KC_H    , CL(KC_S)
                                                                                 , KC_NO
                                                             , KC_DELT , KC_END  , KC_INS
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , KC_TRNS , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , TG(BASE)
-                 , KC_UP   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
-                           , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
-                 , KC_DOWN , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
-                                     , KC_ENT  , KC_NO   ,  KC_NO  , KC_NO   , KC_NO
+                 , KC_TRNS , KC_NO      , KC_NO   , KC_NO   , KC_NO   , KC_NO   , TG(BASE)
+                 , KC_UP   , KC_NO      , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
+                           , KC_NO      , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
+                 , KC_DOWN , KC_NO      , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
+                                        , KC_ENT  , KC_NO   ,  KC_NO  , KC_NO   , KC_NO
                  , KC_HOME , KC_END
                  , KC_PGUP
                  , KC_PGDN , KC_LEFT  , KC_RGHT
@@ -145,7 +145,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 };
 
 const uint16_t PROGMEM fn_actions[] = {
-    [1] = ACTION_LAYER_TAP_TOGGLE(MEDI)                // MEDI1 - Momentary Layer 1 (medi)
+    [1] = ACTION_LAYER_TAP_TOGGLE(MEDI)                // MEDI - Momentary Layer 1 (medi)
+    [2] = ACTION_LAYER_TAP_TOGGLE(DRAW)                // DRAW - Momentary Layer 2 (draw)
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
