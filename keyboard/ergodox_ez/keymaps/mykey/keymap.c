@@ -46,9 +46,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                  , KC_TAB  , KC_Q    , KC_W    , KC_E    , KC_R    , KC_T    , KC_DELT
                  , KC_LCTL , KC_A    , KC_S    , KC_D    , KC_F    , KC_G
                  , KC_LSFT , KC_Z    , KC_X    , KC_C    , KC_V    , KC_B    , KC_BSPC
-                 , KC_LALT , CL(KC_Z), CL(KC_X), CL(KC_V), CL(KC_C)
-                                                                   , KC_ENT  , RESET
-                                                                             , KC_HOME
+                 , KC_LALT , CL(KC_Z), CL(KC_C), CL(KC_V), CL(KC_X)
+                                                                   , KC_ENT  , CL(KC_S)
+                                                                             , MO(DRAW)
                                             , MT(MO(MEDI), KC_SPC) , KC_SPC  , KC_NO
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
                  , KC_NO   , KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_MINS
@@ -84,23 +84,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
  *                                 `--------------------'       `----------------------'
  */
 , [MEDI] = KEYMAP( KC_GRV  , KC_F1   , KC_F6   , KC_F8   , KC_NO    , KC_NO   , KC_NO
-                  , KC_TAB  , KC_NO   , KC_NO   , KC_WH_U , KC_NO    , KC_NO   , KC_NO
-                  , KC_LCTL , KC_NO   , KC_LEFT , KC_WH_D , KC_RGHT  , KC_NO
-                  , KC_LSFT , KC_F2   , KC_F3   , KC_F4   , TC(KC_F5), KC_F7   , KC_F10
-                  , KC_LALT , KC_NO   , KC_NO   , KC_NO   , KC_NO
-                                                                     , KC_NO   , KC_NO
-                                                                               , KC_NO
-                                                          , KC_NO    , KC_NO   , KC_NO
-                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                  , KC_F10  , KC_F11  , KC_F12  , KC_F13  , KC_F14   , KC_NO   , MO(BASE)
-                  , KC_UP   , KC_F15  , KC_F16  , KC_MS_U , KC_NO    , KC_NO   , KC_NO
-                            , KC_NO   , KC_MS_L , KC_MS_D , KC_MS_R  , KC_NO   , KC_RCTL
-                  , KC_DOWN , KC_NO   , KC_NO   , KC_NO   , KC_NO    , KC_NO   , KC_RSFT
-                                      , KC_ENT  , KC_BTN1 , KC_BTN1  , KC_BTN2 , KC_BTN2
-                  , KC_HOME , KC_END
-                  , KC_PGUP
-                  , KC_PGDN , KC_LEFT  , KC_RGHT
-                  )
+                 , KC_TAB  , KC_NO   , KC_NO   , KC_WH_U , KC_NO    , KC_NO   , KC_NO
+                 , KC_LCTL , KC_NO   , KC_LEFT , KC_WH_D , KC_RGHT  , KC_NO
+                 , KC_LSFT , KC_F2   , KC_F3   , KC_F4   , TC(KC_F5), KC_F7   , KC_F10
+                 , KC_LALT , CL(KC_Z), CL(KC_C), CL(KC_V), CL(KC_X)
+                                                                    , KC_NO   , KC_NO
+                                                                              , KC_NO
+                                                         , KC_NO    , KC_NO   , KC_NO
+                 /*      ^^ LEFT ^^      /      vv RIGHT vv      */
+                 , KC_F10  , KC_F11  , KC_F12  , KC_F13  , KC_F14   , KC_NO   , MO(BASE)
+                 , KC_UP   , KC_F15  , KC_F16  , KC_MS_U , KC_NO    , KC_NO   , KC_NO
+                           , KC_NO   , KC_MS_L , KC_MS_D , KC_MS_R  , KC_NO   , RESET
+                 , KC_DOWN , KC_NO   , KC_NO   , KC_NO   , KC_NO    , KC_NO   , KC_NO
+                                     , KC_ENT  , KC_BTN1 , KC_BTN1  , KC_BTN2 , KC_BTN2
+                 , KC_HOME , KC_END
+                 , KC_PGUP
+                 , KC_PGDN , KC_LEFT  , KC_RGHT
+                 )
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* Keymap 2: Draw Layer
@@ -125,11 +125,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
  *                                 `--------------------'       `--------------------'
  */
 , [DRAW] = KEYMAP( KC_GRV  , KC_NO   , KC_NO      , KC_NO   , KC_NO   , KC_NO   , KC_ESC
-                 , KC_TAB  , KC_NO   , KC_NO      , KC_UP   , CL(KC_L), KC_NO   , KC_WH_D
-                 , KC_LCTL , CL(KC_A), AL(KC_DELT), JA_LBRC , SF(KC_L), KC_NO
-                 , KC_LSFT , CL(KC_S), KC_D       , JA_RBRC , AL(KC_L), KC_MINS   , KC_WH_U
-                 , KC_LALT , CL(KC_Z), CL(KC_X)   , CL(KC_V), CL(KC_C)
-                                                                   , KC_H    , KC_HOME
+                 , KC_TAB  , KC_NO      , KC_UP   , CL(KC_L), KC_NO   , KC_NO   , KC_WH_D
+                 , KC_LCTL , AL(KC_DELT), JA_LBRC , SF(KC_L), CL(KC_Z), KC_NO
+                 , KC_LSFT , KC_D       , JA_RBRC , AL(KC_L), CL(KC_Y), KC_MINS , KC_WH_U
+                 , KC_LALT , CL(KC_Z), CL(KC_C)   , CL(KC_V), CL(KC_X)
+                                                                   , KC_H    , CL(KC_S)
                                                                              , KC_NO
                                                          , KC_DELT , KC_END  , KC_INS
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
@@ -189,10 +189,8 @@ void matrix_scan_user(void) {
     switch (layer) {
       // TODO: Make this relevant to the ErgoDox EZ.
         case BASE:
-            ergodox_right_led_1_on();
             break;
         case MEDI:
-            ergodox_right_led_1_on();
             ergodox_right_led_3_on();
             break;
         case DRAW:
