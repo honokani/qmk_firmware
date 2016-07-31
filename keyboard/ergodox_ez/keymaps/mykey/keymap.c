@@ -133,11 +133,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                                                                                 , KC_NO
                                                             , KC_DELT , KC_END  , KC_INS
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , TG(BASE), KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , TG(BASE)
+                 , KC_TRNS , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , TG(BASE)
                  , KC_UP   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
                            , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
                  , KC_DOWN , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
-                                     , KC_NO   , KC_NO   ,  KC_NO  , KC_NO   , KC_NO
+                                     , KC_ENT  , KC_NO   ,  KC_NO  , KC_NO   , KC_NO
                  , KC_HOME , KC_END
                  , KC_PGUP
                  , KC_PGDN , KC_LEFT  , KC_RGHT
