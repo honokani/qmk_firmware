@@ -141,7 +141,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TRNS,
        KC_TRNS, KC_VOLD, KC_VOLU
     ),
-    
+
 /* Keymap 3: Mouse Layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
@@ -215,7 +215,7 @@ void matrix_init_user(void) {
     ergodox_right_led_1_on();
     ergodox_right_led_2_on();
     ergodox_right_led_3_on();
-    ergodox_board_led_off();    
+    ergodox_board_led_off();
 };
 
 // Runs constantly in the background, in a loop.

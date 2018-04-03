@@ -13,45 +13,61 @@
 #define CL(x)   LCTL((x))
 #define SF(x)   LSFT((x))
 #define AL(x)   LALT((x))
-#define TC(x)  MT(CL((x)), (x))
+#define TC(x)   MT(CL((x)), (x))
+#define _____   KC_TRNS
 
-
-#define BASE 0  // layer: default
-#define MEDI 1  // layer: medi
-#define DRAW 2  // layer: draw
+/*
+#define Base 0  // layer: default
+#define Medi 1  // layer: Medi
+#define Sai  2  // layer: Sai
+ */
+enum Layer_names{ Base
+                , Medi
+                , Sai
+                , Clip
+                };
+enum Macro_stat{ Dummy
+               , Cut_paste
+               , C_bucket
+               , C_delete
+               , C_add_l
+               , C_del_l
+               , C_transpa
+               };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 /* Keymap 0: Base layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * | ZenHan | 1    | 2    | 3    | 4    | 5    | Esc  |           | `~   | 6    | 7    | 8    | 9    | 0    | -=     |
+ * | Esc    | 1    | 2    | 3    | 4    | 5    | Z/H  |           | ^~   | 6    | 7    | 8    | 9    | 0    | -=     |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | Tab    | Q    | W    | E    | R    | T    |Delete|           | Up   | Y    | U    | I    | O    | P    | \|     |
+ * | Tab    | Q    | W    | E    | R    | T    | paste|           | Up   | Y    | U    | I    | O    | P    | \|     |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | CTRL   | A    | S    | D    | F    | G    |------|           |------| H    | J    | K    | L    | ;+   | :* /Ctl|
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | LShift | Z    | X    | C    | V    | B    |Backsp|           | Down | N    | M    | ,<   | .>   | /?   | \_ /Sft|
+ * |--------+------+------+------+------+------| copy |           |      |------+------+------+------+------+--------|
+ * | LShift | Z    | X    | C    | V    | B    | /cut |           | Down | N    | M    | ,<   | .>   | /?   | \_ /Sft|
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | Alt  | undo | copy | paste| cut  |                                       | Enter| [{   | ]}   | @`   | ^~   |
+ *   | CTRL |      |      | Alt  | BS   |                                       | Enter| [{   | ]}   | @`   |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        | Enter|      |       | Home | End  |
+ *                                        |      | save |       | Home | End  |
  *                                 ,------|------|------|       |------+--------+------.
- *                                 |      |      | Lyr2 |       | PgUp |        |      |
- *                                 | Space|      |------|       |------|        |      |
- *                                 | /Lyr1| Space|      |       | PgDn | Left   | Right|
+ *                                 |      |      |      |       | PgUp |        |      |
+ *                                 | Space| Space|------|       |------|        |      |
+ *                                 | /Lyr1|      | Del  |       | PgDn | Left   | Right|
  *                                 `--------------------'       `----------------------'
  */
-{ [BASE] = KEYMAP( KC_GRV  , KC_1    , KC_2    , KC_3    , KC_4    , KC_5    , KC_ESC
-                 , KC_TAB  , KC_Q    , KC_W    , KC_E    , KC_R    , KC_T    , KC_DELT
+{ [Base] = KEYMAP( KC_ESC  , KC_1    , KC_2    , KC_3    , KC_4    , KC_5    , KC_GRV //MT(KC_LANG1, KC_LANG2)
+                 , KC_TAB  , KC_Q    , KC_W    , KC_E    , KC_R    , KC_T    , CL(KC_V)
                  , KC_LCTL , KC_A    , KC_S    , KC_D    , KC_F    , KC_G
-                 , KC_LSFT , KC_Z    , KC_X    , KC_C    , KC_V    , KC_B    , KC_BSPC
-                 , KC_LALT , CL(KC_Z), CL(KC_C), CL(KC_V), CL(KC_X)
-                                                                   , KC_ENT  , CL(KC_S)
-                                                                             , TG(DRAW)
-                                               , LT(MEDI, KC_SPC) , KC_SPC  , KC_NO
+                 , KC_LSFT , KC_Z    , KC_X    , KC_C    , KC_V    , KC_B    , M(Cut_paste)
+                 , KC_LCTL , KC_NO   , KC_NO   , KC_LALT , KC_BSPC
+                                                                   , KC_NO   , CL(KC_S)
+                                                                             , KC_NO
+                                                , LT(Medi, KC_SPC) , KC_SPC  , KC_DELT
+
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , TG(DRAW), KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_MINS
+                 , JA_HAT  , KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_MINS
                  , KC_UP   , KC_Y    , KC_U    , KC_I    , KC_O    , KC_P    , JA_ENVL
                            , KC_H    , KC_J    , KC_K    , KC_L    , KC_SCLN , CTL_T(JA_CLON)
                  , KC_DOWN , KC_N    , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , SFT_T(JA_ENUN)
@@ -62,82 +78,100 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                  )
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* Keymap 1: medi layer
+/* Keymap 1: Medi layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * | zenhan | F1   | F6   | F8   |      |      |      |           | F11  | F12  | F13  | F14  | F15  | F16  | Lyr0   |
+ * |        | F1   | F4   | F6   | F8   | F9   |      |           | Lyr0 | F11  | F12  | F13  | F14  | F15  | Lyr2   |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | Tab    |      |      | Up   |      |      |      |           | WH-U |      |      | M-up |      |      |        |
+ * |        |      |      | M-Up |      |      |      |           | WH-U |      |      |      |      |      | Lyr3   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | CTRL   |      | Left | Down | Right|      |------|           |------|      | M-le | M-do | M-ri |      |        |
+ * |        |LClick| M-Lf | M-Dn | M-Ri |RClick|------|           |------| Left | Down | Up   | Right|      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | LShift | F2   | F3   | F4  |F5/CrlF5| F7  | F10  |           | WH-D |      |      |      |      |      |        |
+ * |        | F2   | F3  |F5/CrlF5| F7  | F10  |      |           | WH-D |      |      |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | Alt  | undo | copy | paste| cut  |                                       | Enter|LClick|LClick|RClick|RClick|
+ *   |      |      |      |      |      |                                       | Enter|LClick|LClick|RClick|RClick|
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       | Home | End  |
  *                                 ,------|------|------|       |------+--------+------.
  *                                 |      |      |      |       | PgUp |        |      |
- *                                 |      |      |------|       |------|        |      |
- *                                 |      |      |      |       | PgDn | Left   | Right
+ *                                 | Lyr0 |      |------|       |------|        |      |
+ *                                 |      |      | reset|       | PgDn | Left   | Right
  *                                 `--------------------'       `----------------------'
  */
-, [MEDI] = KEYMAP( KC_GRV  , KC_F1   , KC_F6   , KC_F8   , KC_F15   , KC_F16  , KC_NO
-                 , KC_TAB  , KC_NO   , KC_NO   , KC_WH_U , KC_NO    , KC_NO   , KC_NO
-                 , KC_LCTL , KC_NO   , KC_LEFT , KC_WH_D , KC_RGHT  , KC_NO
-                 , KC_LSFT , KC_F2   , KC_F3   , KC_F4   , TC(KC_F5), KC_F7   , KC_F10
-                 , KC_LALT , CL(KC_Z), CL(KC_C), CL(KC_V), CL(KC_X)
-                                                                    , KC_NO   , KC_NO
-                                                                              , KC_NO
-                                                         , KC_TRNS  , KC_NO   , KC_NO
+, [Medi] = KEYMAP( _____   , KC_F1   , KC_F4   , KC_F6    , KC_F8    , KC_F9   , _____
+                 , _____   , KC_NO   , KC_NO   , KC_MS_U  , KC_NO    , KC_NO   , _____
+                 , _____   , KC_BTN1 , KC_MS_L , KC_MS_D  , KC_MS_R  , KC_BTN2
+                 , _____   , KC_F2   , KC_F3   , TC(KC_F5), KC_F7    , KC_F10  , _____
+                 , _____   , _____   , _____   , _____    , _____
+                                                                     , KC_NO   , KC_NO
+                                                                               , KC_NO
+                                                          , _____    , KC_NO   , RESET
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , KC_TRNS , KC_F10  , KC_F11  , KC_F12  , KC_F13  , KC_F14   , TG(BASE)
-                 , KC_UP   , KC_NO   , KC_NO   , KC_MS_U , KC_NO    , KC_NO   , KC_NO
-                           , KC_NO   , KC_MS_L , KC_MS_D , KC_MS_R  , KC_NO   , RESET
-                 , KC_DOWN , KC_NO   , KC_NO   , KC_NO   , KC_NO    , KC_NO   , KC_NO
-                                     , KC_ENT  , KC_BTN1 , KC_BTN1  , KC_BTN2 , KC_BTN2
+                 , TG(Base), KC_F11  , KC_F12  , KC_F13   , KC_F14   , KC_F15  , TG(Sai)
+                 , KC_WH_U , KC_NO   , KC_NO   , KC_MS_U  , KC_NO    , KC_NO   , TG(Clip)
+                           , KC_LEFT , KC_DOWN , KC_UP    , KC_RGHT  , KC_NO   , KC_NO
+                 , KC_WH_D , KC_NO   , KC_NO   , KC_NO    , KC_NO    , KC_NO   , KC_NO
+                                     , KC_ENT  , KC_BTN1  , KC_BTN1  , KC_BTN2 , KC_BTN2
                  , KC_HOME , KC_END
                  , KC_PGUP
                  , KC_PGDN , KC_LEFT  , KC_RGHT
                  )
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* Keymap 2: Draw Layer
+/* Keymap 2~: Draw
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * | zenhan |  F1  |  F2  |  F3  |  F4  |  F5  | Esc  |           | F7   |  F8  |  F9  | F10  |  F11 |  F12 | Lyr0   |
+ * | same   |  F1  |  F2  |  F3  |  F4  |  F5  | Esc  |           | F7   |  F8  |  F9  | F10  |  F11 |  F12 |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | Tab    |      |      |      | seve |      |expand|           |      |      |      |      |      |      |        |
+ * | same   |      |      |      |      |      | paste|           |      |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | CTRL   |      |      |      | sel +|      |------|           |------|      |      |      |      |      |        |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | LShift |      |      |      | sel -|      |reduce|           |      |      |      |      |      |      |        |
+ * | same   |bucket| size+| rope+| undo |transp|----- |           |------|      |      |      |      |      |        |
+ * |--------+------+------+------+------+------| copy |           |      |------+------+------+------+------+--------|
+ * | same   |delete| size-| rope-| redo |erease| /cut |           |      |      | pen  |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | Alt  | undo | copy | paste| cut  |                                       |      |      |      |      |      |
+ *   | same | same | same | same | same |                                       |      |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        |      |      |       |      | Mute |
+ *                                        | save |      |       |      | Mute |
  *                                 ,------|------|------|       |------+------+------.
  *                                 |      |      |      |       |      |      |      |
- *                                 |Space |Enter |------|       |------| Vol- | Vol+ |
+ *                                 |L Rote|R Rote|------|       |------| Vol- | Vol+ |
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
-, [DRAW] = KEYMAP( KC_GRV  , KC_NO      , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_ESC
-                 , KC_TAB  , KC_NO      , KC_UP   , CL(KC_L), KC_NO   , KC_NO   , KC_WH_D
-                 , KC_LCTL , AL(KC_DELT), JA_RBRC , KC_L    , CL(KC_Z), KC_E
-                 , KC_LSFT , KC_D       , JA_LBRC , AL(KC_L), CL(KC_Y), KC_MINS , KC_WH_U
-                 , KC_LALT , CL(KC_Z)   , CL(KC_C), CL(KC_V), CL(KC_X)
-                                                                      , KC_H    , CL(KC_S)
-                                                                                , KC_NO
-                                                            , KC_DELT , KC_END  , KC_INS
+, [Sai] =  KEYMAP( _____   , KC_NO      , KC_NO   , KC_NO     , KC_NO   , KC_NO   , _____
+                 , _____   , KC_NO      , KC_UP   , CL(KC_L)  , KC_NO   , KC_T    , _____
+                 , _____   , AL(KC_DELT), JA_RBRC , KC_L      , CL(KC_Z), KC_MINS
+                 , _____   , KC_D       , JA_LBRC , AL(KC_L)  , CL(KC_Y), KC_E    , _____
+                 , _____   , _____      , _____   , _____     , _____
+                                                                        , KC_H    , CL(KC_S)
+                                                                                  , KC_NO
+                                                              , KC_DELT , KC_END  , KC_INS
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , KC_TRNS , KC_NO      , KC_NO   , KC_NO   , KC_NO   , KC_NO   , TG(BASE)
-                 , KC_UP   , KC_NO      , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
-                           , KC_NO      , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
-                 , KC_DOWN , KC_NO      , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO
-                                        , KC_ENT  , KC_NO   ,  KC_NO  , KC_NO   , KC_NO
+                 , _____   , KC_NO      , KC_NO   , KC_NO     , KC_NO   , KC_NO   , _____
+                 , _____   , KC_NO      , KC_NO   , KC_NO     , KC_NO   , KC_NO   , _____
+                           , _____      , _____   , _____     , _____   , KC_NO   , KC_NO
+                 , _____   , KC_NO      , KC_NO   , KC_NO     , KC_NO   , KC_NO   , KC_NO
+                                        , KC_ENT  , KC_NO     , KC_NO   , KC_NO   , MO(Base)
+                 , KC_HOME , KC_END
+                 , KC_PGUP
+                 , KC_PGDN , KC_LEFT  , KC_RGHT
+                 )
+, [Clip] = KEYMAP( _____   , KC_NO      , KC_NO   , KC_NO     , KC_NO   , KC_NO   , _____
+                 , _____   , KC_NO      , KC_UP   , CL(KC_D)  , KC_NO   , KC_T    , _____
+                 , _____   , M(C_bucket), JA_RBRC , M(C_add_l), CL(KC_Z), M(C_transpa)
+                 , _____   , M(C_delete), JA_LBRC , M(C_del_l), CL(KC_Y), KC_E    , _____
+                 , _____   , _____      , _____   , _____     , _____
+                                                                        , CL(KC_H), CL(KC_S)
+                                                                                  , KC_NO
+                                                              , KC_MINS , JA_HAT  , S(CL(KC_H))
+                 /*      ^^ LEFT ^^      /      vv RIGHT vv      */
+                 , _____   , KC_NO      , KC_NO   , KC_NO     , KC_NO   , KC_NO   , _____
+                 , _____   , KC_NO      , KC_NO   , KC_NO     , KC_NO   , KC_NO   , _____
+                           , _____      , _____   , _____     , _____   , KC_NO   , KC_NO
+                 , _____   , KC_NO      , KC_P    , KC_NO     , KC_NO   , KC_NO   , KC_NO
+                                        , KC_ENT  , KC_NO     , KC_NO   , KC_NO   , MO(Base)
                  , KC_HOME , KC_END
                  , KC_PGUP
                  , KC_PGDN , KC_LEFT  , KC_RGHT
@@ -145,19 +179,49 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 };
 
 const uint16_t PROGMEM fn_actions[] = {
-    [1] = ACTION_LAYER_TAP_TOGGLE(MEDI)                // MEDI - Momentary Layer 1 (medi)
+    [1] = ACTION_LAYER_TAP_TOGGLE(Medi)                // Medi - Momentary Layer 1 (Medi)
 };
 
+static uint16_t start;
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
-{
-    // MACRODOWN only works in this function
+{ // MACRODOWN only works in this function
     switch(id) {
-        case 0:
+        case Dummy:
+            if (record->event.pressed) /* 押したとき */ register_code(KC_RSFT);
+            else                       /* 離したとき */ unregister_code(KC_RSFT);
+            break;
+        case Cut_paste:
             if (record->event.pressed) {
-                register_code(KC_RSFT);
+                start = timer_read();
             } else {
-                unregister_code(KC_RSFT);
+                if (300 <= timer_elapsed(start)) // 150ms以上なら 切り取り
+                    return MACRO(D(LCTL), T(X), U(LCTL), END);
+                else                             // 150ms未満なら コピー
+                    return MACRO(D(LCTL), T(C), U(LCTL), END);
             }
+            break;
+        case C_bucket:
+            if (record->event.pressed)
+                return MACRO(D(G), W(800), END);
+            else
+                return MACRO(U(G), D(LCTL), T(D), U(LCTL), END);
+            break;
+        case C_delete:
+            if (record->event.pressed)
+                return MACRO(T(DEL), D(LCTL), T(D), U(LCTL), END);
+            break;
+        case C_add_l:
+            if (record->event.pressed) return MACRO(D(M), D(LSFT), END);
+            else                       return MACRO(W(200), U(LSFT), U(M), END);
+            break;
+        case C_del_l:
+            if (record->event.pressed) return MACRO(D(M), D(LALT), END);
+            else                       return MACRO(W(200), U(LALT), U(M), END);
+            break;
+        case C_transpa:
+            return MACRO(T(C), END);
+            break;
+        default:
             break;
     }
     return MACRO_NONE;
@@ -188,16 +252,18 @@ void matrix_scan_user(void) {
 
     switch (layer) {
       // TODO: Make this relevant to the ErgoDox EZ.
-        case BASE:
-            break;
-        case MEDI:
+        case Medi:
             ergodox_right_led_3_on();
             break;
-        case DRAW:
-            ergodox_right_led_2_on();
+        case Sai :
+            ergodox_right_led_1_on();
             break;
+        case Clip :
+            ergodox_right_led_1_on();
+            ergodox_right_led_3_on();
+            break;
+        case Base:
         default:
-            // none
             break;
     }
 
