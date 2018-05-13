@@ -18,11 +18,11 @@
 
 /*
 #define Base 0  // layer: default
-#define Medi 1  // layer: Medi
+#define Medi 1  // layer: Media
 #define Sai  2  // layer: Sai
  */
 enum Layer_names{ Base
-                , Medi
+                , Media
                 , Sai
                 , Clip
                 };
@@ -39,84 +39,84 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 /* Keymap 0: Base layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * | Esc    | 1    | 2    | 3    | 4    | 5    | Z/H  |           | ^~   | 6    | 7    | 8    | 9    | 0    | -=     |
+ * | Esc    | 1    | 2    | 3    | 4    | 5    | Z/H  |           | Undo | 6    | 7    | 8    | 9    | 0    | \|     |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | Tab    | Q    | W    | E    | R    | T    | paste|           | Up   | Y    | U    | I    | O    | P    | \|     |
+ * | Tab    | Q    | W    | E    | R    | T    | paste|           | @`   | Y    | U    | I    | O    | P    | -=     |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | CTRL   | A    | S    | D    | F    | G    |------|           |------| H    | J    | K    | L    | ;+   | :* /Ctl|
  * |--------+------+------+------+------+------| copy |           |      |------+------+------+------+------+--------|
- * | LShift | Z    | X    | C    | V    | B    | /cut |           | Down | N    | M    | ,<   | .>   | /?   | \_ /Sft|
+ * | LShift | Z    | X    | C    | V    | B    | /cut |           | ^~   | N    | M    | ,<   | .>   | /?   | \_ /Sft|
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | CTRL |      |      | Alt  | BS   |                                       | Enter| [{   | ]}   | @`   |      |
+ *   | Enter| [{   | ]}   | Alt  | BS   |                                       | Enter| Lf   | Dn   | Up   | Ri   |
  *   `----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,-------------.
- *                                        |      | save |       | Home | End  |
- *                                 ,------|------|------|       |------+--------+------.
- *                                 |      |      |      |       | PgUp |        |      |
- *                                 | Space| Space|------|       |------|        |      |
- *                                 | /Lyr1|      | Del  |       | PgDn | Left   | Right|
- *                                 `--------------------'       `----------------------'
+ *                                      ,-------------.           ,-------------.
+ *                                      |      | save |           | Home | End  |
+ *                               ,------|------|------|           |------+--------+------.
+ *                               |      |      |      |           | PgUp |        |      |
+ *                               | Space| Tab  |------|           |------| Space  |      |
+ *                               | /Lyr1|      | Del  |           | PgDn |        |      |
+ *                               `--------------------'           `----------------------'
  */
 { [Base] = KEYMAP( KC_ESC  , KC_1    , KC_2    , KC_3    , KC_4    , KC_5    , KC_GRV //MT(KC_LANG1, KC_LANG2)
                  , KC_TAB  , KC_Q    , KC_W    , KC_E    , KC_R    , KC_T    , CL(KC_V)
                  , KC_LCTL , KC_A    , KC_S    , KC_D    , KC_F    , KC_G
                  , KC_LSFT , KC_Z    , KC_X    , KC_C    , KC_V    , KC_B    , M(Cut_paste)
-                 , KC_LCTL , KC_NO   , KC_NO   , KC_LALT , KC_BSPC
+                 , KC_ENT  , JA_LBRC , JA_RBRC , KC_LALT , KC_BSPC
                                                                    , KC_NO   , CL(KC_S)
                                                                              , KC_NO
-                                                , LT(Medi, KC_SPC) , KC_SPC  , KC_DELT
+                                                , LT(Medi, KC_SPC) , KC_TAB  , KC_DELT
 
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , JA_HAT  , KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_MINS
-                 , KC_UP   , KC_Y    , KC_U    , KC_I    , KC_O    , KC_P    , JA_ENVL
+                 , CL(KC_Z), KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , JA_ENVL
+                 , JA_AT   , KC_Y    , KC_U    , KC_I    , KC_O    , KC_P    , KC_MINS
                            , KC_H    , KC_J    , KC_K    , KC_L    , KC_SCLN , CTL_T(JA_CLON)
-                 , KC_DOWN , KC_N    , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , SFT_T(JA_ENUN)
-                                     , KC_ENT  , JA_LBRC , JA_RBRC , JA_AT   , JA_HAT
+                 , JA_HAT  , KC_N    , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , SFT_T(JA_ENUN)
+                                     , KC_ENT  , KC_LEFT , KC_DOWN , KC_UP   , KC_RGHT
                  , KC_HOME , KC_END
                  , KC_PGUP
-                 , KC_PGDN , KC_LEFT  , KC_RGHT
+                 , KC_PGDN ,   , LT(Medi, KC_SPC)
                  )
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* Keymap 1: Medi layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        | F1   | F4   | F6   | F8   | F9   |      |           | Lyr0 | F11  | F12  | F13  | F14  | F15  | Lyr2   |
+ * |        | F1   | F3   | F6   | F8   | F9   |      |           | Lyr0 | F11  | F12  | F13  | F14  | F15  | Lyr2   |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |        |      |      | M-Up |      |      |      |           | WH-U |      |      |      |      |      | Lyr3   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        |LClick| M-Lf | M-Dn | M-Ri |RClick|------|           |------| Left | Down | Up   | Right|      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        | F2   | F3  |F5/CrlF5| F7  | F10  |      |           | WH-D |      |      |      |      |      |        |
+ * |        | F2   | F4  |F5/CrlF5| F7  | F10  |      |           | WH-D |      |      |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |      |      |      |      |      |                                       | Enter|LClick|LClick|RClick|RClick|
  *   `----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,-------------.
- *                                        |      |      |       | Home | End  |
- *                                 ,------|------|------|       |------+--------+------.
- *                                 |      |      |      |       | PgUp |        |      |
- *                                 | Lyr0 |      |------|       |------|        |      |
- *                                 |      |      | reset|       | PgDn | Left   | Right
- *                                 `--------------------'       `----------------------'
+ *                                      ,-------------.           ,-------------.
+ *                                      |      |      |           | Home | End  |
+ *                               ,------|------|------|           |------+--------+------.
+ *                               |      |      |      |           | PgUp |        |      |
+ *                               | Lyr0 |      |------|           |------|        |      |
+ *                               |      |      | reset|           | PgDn | Left   | Right
+ *                               `--------------------'           `----------------------'
  */
-, [Medi] = KEYMAP( _____   , KC_F1   , KC_F4   , KC_F6    , KC_F8    , KC_F9   , _____
-                 , _____   , KC_NO   , KC_NO   , KC_MS_U  , KC_NO    , KC_NO   , _____
-                 , _____   , KC_BTN1 , KC_MS_L , KC_MS_D  , KC_MS_R  , KC_BTN2
-                 , _____   , KC_F2   , KC_F3   , TC(KC_F5), KC_F7    , KC_F10  , _____
-                 , _____   , _____   , _____   , _____    , _____
-                                                                     , KC_NO   , KC_NO
-                                                                               , KC_NO
-                                                          , _____    , KC_NO   , RESET
-                 /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , TG(Base), KC_F11  , KC_F12  , KC_F13   , KC_F14   , KC_F15  , TG(Sai)
-                 , KC_WH_U , KC_NO   , KC_NO   , KC_MS_U  , KC_NO    , KC_NO   , TG(Clip)
-                           , KC_LEFT , KC_DOWN , KC_UP    , KC_RGHT  , KC_NO   , KC_NO
-                 , KC_WH_D , KC_NO   , KC_NO   , KC_NO    , KC_NO    , KC_NO   , KC_NO
-                                     , KC_ENT  , KC_BTN1  , KC_BTN1  , KC_BTN2 , KC_BTN2
-                 , KC_HOME , KC_END
-                 , KC_PGUP
-                 , KC_PGDN , KC_LEFT  , KC_RGHT
-                 )
+, [Media] = KEYMAP( _____   , KC_F1   , KC_F3   , KC_F6    , KC_F8    , KC_F9   , _____
+                  , _____   , KC_NO   , KC_NO   , KC_MS_U  , KC_NO    , KC_NO   , _____
+                  , _____   , KC_BTN1 , KC_MS_L , KC_MS_D  , KC_MS_R  , KC_BTN2
+                  , _____   , KC_F2   , KC_F4   , TC(KC_F5), KC_F7    , KC_F10  , _____
+                  , _____   , _____   , _____   , _____    , _____
+                                                                      , KC_NO   , KC_NO
+                                                                                , KC_NO
+                                                           , _____    , KC_NO   , RESET
+                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
+                  , TG(Base), KC_F11  , KC_F12  , KC_F13   , KC_F14   , KC_F15  , TG(Sai)
+                  , KC_WH_U , KC_NO   , KC_NO   , KC_NO    , KC_NO    , KC_NO   , TG(Clip)
+                            , KC_LEFT , KC_DOWN , KC_UP    , KC_RGHT  , KC_NO   , KC_NO
+                  , KC_WH_D , KC_NO   , KC_NO   , KC_NO    , KC_NO    , KC_NO   , KC_NO
+                                      , KC_ENT  , KC_BTN1  , KC_BTN1  , KC_BTN2 , KC_BTN2
+                  , _____   , _____
+                  , _____
+                  , _____   , _____   , _____
+                  )
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* Keymap 2~: Draw
