@@ -18,7 +18,7 @@
 
 /*
 #define Base 0  // layer: default
-#define Medi 1  // layer: Media
+#define Media 1  // layer: Media
 #define Sai  2  // layer: Sai
  */
 enum Layer_names{ Base
@@ -64,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                  , KC_ENT  , JA_LBRC , JA_RBRC , KC_LALT , KC_BSPC
                                                                    , KC_NO   , CL(KC_S)
                                                                              , KC_NO
-                                                , LT(Medi, KC_SPC) , KC_TAB  , KC_DELT
+                                                , LT(Media, KC_SPC) , KC_TAB  , KC_DELT
 
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
                  , CL(KC_Z), KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , JA_ENVL
@@ -74,11 +74,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                                      , KC_ENT  , KC_LEFT , KC_DOWN , KC_UP   , KC_RGHT
                  , KC_HOME , KC_END
                  , KC_PGUP
-                 , KC_PGDN ,   , LT(Medi, KC_SPC)
+                 , KC_PGDN ,   , LT(Media, KC_SPC)
                  )
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* Keymap 1: Medi layer
+/* Keymap 1: Media layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        | F1   | F3   | F6   | F8   | F9   |      |           | Lyr0 | F11  | F12  | F13  | F14  | F15  | Lyr2   |
@@ -179,7 +179,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 };
 
 const uint16_t PROGMEM fn_actions[] = {
-    [1] = ACTION_LAYER_TAP_TOGGLE(Medi)                // Medi - Momentary Layer 1 (Medi)
+    [1] = ACTION_LAYER_TAP_TOGGLE(Media)                // Media - Momentary Layer 1 (Media)
 };
 
 static uint16_t start;
@@ -252,7 +252,7 @@ void matrix_scan_user(void) {
 
     switch (layer) {
       // TODO: Make this relevant to the ErgoDox EZ.
-        case Medi:
+        case Media:
             ergodox_right_led_3_on();
             break;
         case Sai :
