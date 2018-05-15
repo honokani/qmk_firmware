@@ -15,6 +15,7 @@
 #define AL(x)   LALT((x))
 #define TC(x)   MT(CL((x)), (x))
 #define _____   KC_TRNS
+#define xxxxx   KC_NO
 
 /*
 #define Base 0  // layer: default
@@ -62,19 +63,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                  , KC_LCTL , KC_A    , KC_S    , KC_D    , KC_F    , KC_G
                  , KC_LSFT , KC_Z    , KC_X    , KC_C    , KC_V    , KC_B    , M(Cut_paste)
                  , KC_ENT  , JA_LBRC , JA_RBRC , KC_LALT , KC_BSPC
-                                                                   , KC_NO   , CL(KC_S)
-                                                                             , KC_NO
-                                                , LT(Media, KC_SPC) , KC_TAB  , KC_DELT
+                                                                   , xxxxx   , CL(KC_S)
+                                                                             , xxxxx
+                                               , LT(Media, KC_SPC) , KC_TAB  , KC_DELT
 
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
                  , CL(KC_Z), KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , JA_ENVL
                  , JA_AT   , KC_Y    , KC_U    , KC_I    , KC_O    , KC_P    , KC_MINS
                            , KC_H    , KC_J    , KC_K    , KC_L    , KC_SCLN , CTL_T(JA_CLON)
                  , JA_HAT  , KC_N    , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , SFT_T(JA_ENUN)
-                                     , KC_ENT  , KC_LEFT , KC_DOWN , KC_UP   , KC_RGHT
+                                     , KC_ENT  , KC_RGHT , xxxxx   , xxxxx   , xxxxx
                  , KC_HOME , KC_END
-                 , KC_PGUP
-                 , KC_PGDN ,   , LT(Media, KC_SPC)
+                 , KC_UP
+                 , KC_DOWN , KC_LEFT , LT(Media, KC_SPC)
                  )
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -89,33 +90,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        | F2   | F4  |F5/CrlF5| F7  | F10  |      |           | WH-D |      |      |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |      |                                       | Enter|LClick|LClick|RClick|RClick|
+ *   | reset|      |      |      |      |                                       | Enter|      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                      ,-------------.           ,-------------.
  *                                      |      |      |           | Home | End  |
  *                               ,------|------|------|           |------+--------+------.
  *                               |      |      |      |           | PgUp |        |      |
  *                               | Lyr0 |      |------|           |------|        |      |
- *                               |      |      | reset|           | PgDn | Left   | Right
+ *                               |      |      |      |           | PgDn | Left   | Right
  *                               `--------------------'           `----------------------'
  */
 , [Media] = KEYMAP( _____   , KC_F1   , KC_F3   , KC_F6    , KC_F8    , KC_F9   , _____
-                  , _____   , KC_NO   , KC_NO   , KC_MS_U  , KC_NO    , KC_NO   , _____
-                  , _____   , KC_BTN1 , KC_MS_L , KC_MS_D  , KC_MS_R  , KC_BTN2
+                  , _____   , xxxxx   , KC_BTN1 , KC_MS_U  , KC_BTN2  , xxxxx   , _____
+                  , _____   , xxxxx   , KC_MS_L , KC_MS_D  , KC_MS_R  , xxxxx
                   , _____   , KC_F2   , KC_F4   , TC(KC_F5), KC_F7    , KC_F10  , _____
-                  , _____   , _____   , _____   , _____    , _____
-                                                                      , KC_NO   , KC_NO
-                                                                                , KC_NO
-                                                           , _____    , KC_NO   , RESET
+                  , RESET   , _____   , _____   , _____    , _____
+                                                                      , xxxxx   , xxxxx
+                                                                                , xxxxx
+                                                           , _____    , xxxxx   , _____
                   /*      ^^ LEFT ^^      /      vv RIGHT vv      */
                   , TG(Base), KC_F11  , KC_F12  , KC_F13   , KC_F14   , KC_F15  , TG(Sai)
-                  , KC_WH_U , KC_NO   , KC_NO   , KC_NO    , KC_NO    , KC_NO   , TG(Clip)
-                            , KC_LEFT , KC_DOWN , KC_UP    , KC_RGHT  , KC_NO   , KC_NO
-                  , KC_WH_D , KC_NO   , KC_NO   , KC_NO    , KC_NO    , KC_NO   , KC_NO
-                                      , KC_ENT  , KC_BTN1  , KC_BTN1  , KC_BTN2 , KC_BTN2
+                  , KC_WH_U , xxxxx   , xxxxx   , xxxxx    , xxxxx    , xxxxx   , TG(Clip)
+                            , KC_LEFT , KC_DOWN , KC_UP    , KC_RGHT  , xxxxx   , xxxxx
+                  , KC_WH_D , KC_GRV  , xxxxx   , xxxxx    , xxxxx    , xxxxx   , xxxxx
+                                      , _____   , KC_END   , _____    , _____   , _____
                   , _____   , _____
-                  , _____
-                  , _____   , _____   , _____
+                  , KC_PGUP
+                  , KC_PGDN , KC_HOME , _____
                   )
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -140,38 +141,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
-, [Sai] =  KEYMAP( _____   , KC_NO      , KC_NO   , KC_NO     , KC_NO   , KC_NO   , _____
-                 , _____   , KC_NO      , KC_UP   , CL(KC_L)  , KC_NO   , KC_T    , _____
+, [Sai] =  KEYMAP( _____   , xxxxx      , xxxxx   , xxxxx     , xxxxx   , xxxxx   , _____
+                 , _____   , xxxxx      , KC_UP   , CL(KC_L)  , xxxxx   , KC_T    , _____
                  , _____   , AL(KC_DELT), JA_RBRC , KC_L      , CL(KC_Z), KC_MINS
                  , _____   , KC_D       , JA_LBRC , AL(KC_L)  , CL(KC_Y), KC_E    , _____
                  , _____   , _____      , _____   , _____     , _____
                                                                         , KC_H    , CL(KC_S)
-                                                                                  , KC_NO
+                                                                                  , xxxxx
                                                               , KC_DELT , KC_END  , KC_INS
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , _____   , KC_NO      , KC_NO   , KC_NO     , KC_NO   , KC_NO   , _____
-                 , _____   , KC_NO      , KC_NO   , KC_NO     , KC_NO   , KC_NO   , _____
-                           , _____      , _____   , _____     , _____   , KC_NO   , KC_NO
-                 , _____   , KC_NO      , KC_NO   , KC_NO     , KC_NO   , KC_NO   , KC_NO
-                                        , KC_ENT  , KC_NO     , KC_NO   , KC_NO   , MO(Base)
+                 , _____   , xxxxx      , xxxxx   , xxxxx     , xxxxx   , xxxxx   , _____
+                 , _____   , xxxxx      , xxxxx   , xxxxx     , xxxxx   , xxxxx   , _____
+                           , _____      , _____   , _____     , _____   , xxxxx   , xxxxx
+                 , _____   , xxxxx      , xxxxx   , xxxxx     , xxxxx   , xxxxx   , xxxxx
+                                        , KC_ENT  , xxxxx     , xxxxx   , xxxxx   , MO(Base)
                  , KC_HOME , KC_END
                  , KC_PGUP
                  , KC_PGDN , KC_LEFT  , KC_RGHT
                  )
-, [Clip] = KEYMAP( _____   , KC_NO      , KC_NO   , KC_NO     , KC_NO   , KC_NO   , _____
-                 , _____   , KC_NO      , KC_UP   , CL(KC_D)  , KC_NO   , KC_T    , _____
+, [Clip] = KEYMAP( _____   , xxxxx      , xxxxx   , xxxxx     , xxxxx   , xxxxx   , _____
+                 , _____   , xxxxx      , KC_UP   , CL(KC_D)  , xxxxx   , KC_T    , _____
                  , _____   , M(C_bucket), JA_RBRC , M(C_add_l), CL(KC_Z), M(C_transpa)
                  , _____   , M(C_delete), JA_LBRC , M(C_del_l), CL(KC_Y), KC_E    , _____
                  , _____   , _____      , _____   , _____     , _____
                                                                         , CL(KC_H), CL(KC_S)
-                                                                                  , KC_NO
+                                                                                  , xxxxx
                                                               , KC_MINS , JA_HAT  , S(CL(KC_H))
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , _____   , KC_NO      , KC_NO   , KC_NO     , KC_NO   , KC_NO   , _____
-                 , _____   , KC_NO      , KC_NO   , KC_NO     , KC_NO   , KC_NO   , _____
-                           , _____      , _____   , _____     , _____   , KC_NO   , KC_NO
-                 , _____   , KC_NO      , KC_P    , KC_NO     , KC_NO   , KC_NO   , KC_NO
-                                        , KC_ENT  , KC_NO     , KC_NO   , KC_NO   , MO(Base)
+                 , _____   , xxxxx      , xxxxx   , xxxxx     , xxxxx   , xxxxx   , _____
+                 , _____   , xxxxx      , xxxxx   , xxxxx     , xxxxx   , xxxxx   , _____
+                           , _____      , _____   , _____     , _____   , xxxxx   , xxxxx
+                 , _____   , xxxxx      , KC_P    , xxxxx     , xxxxx   , xxxxx   , xxxxx
+                                        , KC_ENT  , xxxxx     , xxxxx   , xxxxx   , MO(Base)
                  , KC_HOME , KC_END
                  , KC_PGUP
                  , KC_PGDN , KC_LEFT  , KC_RGHT
