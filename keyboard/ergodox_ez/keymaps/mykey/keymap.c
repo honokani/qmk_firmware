@@ -28,12 +28,18 @@ enum Layer_names{ Base
                 , Clip
                 };
 enum Macro_stat{ Dummy
+               // common
                , Cut_paste
+               // to draw
                , C_bucket
                , C_delete
+               , C_outLn
+               , C_autol
                , C_add_l
                , C_del_l
-               , C_transpa
+               , C_voPen
+               , C_rotR
+               , C_rotL
                };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
@@ -118,6 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                   , KC_PGUP
                   , KC_PGDN , KC_HOME , _____
                   )
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* Keymap 2~: Draw
@@ -125,59 +132,60 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * | same   |  F1  |  F2  |  F3  |  F4  |  F5  | Esc  |           | F7   |  F8  |  F9  | F10  |  F11 |  F12 |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | same   |      |      |      |      |      | paste|           |      |      |      |      |      |      |        |
+ * | same   |      |      |autoRp|      |areaPn| paste|           |      |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | same   |bucket| size+| rope+| undo |transp|----- |           |------|      |      |      |      |      |        |
+ * | same   |bucket| size+| rope+| undo |voidPn|----- |           |------|      |      |      |      |      |        |
  * |--------+------+------+------+------+------| copy |           |      |------+------+------+------+------+--------|
  * | same   |delete| size-| rope-| redo |erease| /cut |           |      |      | pen  |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | same | same | same | same | same |                                       |      |      |      |      |      |
+ *   | same | same | same |unrope| same |                                       |      |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        | save |      |       |      | Mute |
+ *                                        |      | save |       |      | Mute |
  *                                 ,------|------|------|       |------+------+------.
  *                                 |      |      |      |       |      |      |      |
  *                                 |L Rote|R Rote|------|       |------| Vol- | Vol+ |
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
-, [Sai] =  KEYMAP( _____   , xxxxx      , xxxxx   , xxxxx     , xxxxx   , xxxxx   , _____
-                 , _____   , xxxxx      , KC_UP   , CL(KC_L)  , xxxxx   , KC_T    , _____
-                 , _____   , AL(KC_DELT), JA_RBRC , KC_L      , CL(KC_Z), KC_MINS
-                 , _____   , KC_D       , JA_LBRC , AL(KC_L)  , CL(KC_Y), KC_E    , _____
-                 , _____   , _____      , _____   , _____     , _____
-                                                                        , KC_H    , CL(KC_S)
-                                                                                  , xxxxx
-                                                              , KC_DELT , KC_END  , KC_INS
-                 /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , _____   , xxxxx      , xxxxx   , xxxxx     , xxxxx   , xxxxx   , _____
-                 , _____   , xxxxx      , xxxxx   , xxxxx     , xxxxx   , xxxxx   , _____
-                           , _____      , _____   , _____     , _____   , xxxxx   , xxxxx
-                 , _____   , xxxxx      , xxxxx   , xxxxx     , xxxxx   , xxxxx   , xxxxx
-                                        , KC_ENT  , xxxxx     , xxxxx   , xxxxx   , MO(Base)
+, [Sai] =  KEYMAP( _____   , xxxxx      , xxxxx   , xxxxx      , xxxxx    , xxxxx     , _____
+                 , _____   , M(C_outLn) , xxxxx   , M(C_autol) , xxxxx    , KC_T      , _____
+                 , _____   , M(C_bucket), JA_RBRC , M(C_add_l) , CL(KC_Z) , M(C_voPen)
+                 , _____   , M(C_delete), JA_LBRC , M(C_del_l) , CL(KC_Y) , KC_E      , _____
+                 , _____   , _____      , _____   , CL(KC_D)   , _____
+                                                                          , KC_H      , CL(KC_S)
+                                                                                      , xxxxx
+                                                               , M(C_rotL), M(C_rotR) , KC_HOME
+                 /*      ^^ LEFT ^^      /      vv RIGHT vv       */
+                 , _____   , xxxxx      , xxxxx   , xxxxx      , xxxxx    , xxxxx     , _____
+                 , _____   , xxxxx      , xxxxx   , xxxxx      , xxxxx    , xxxxx     , _____
+                           , _____      , _____   , _____      , _____    , xxxxx     , xxxxx
+                 , _____   , xxxxx      , xxxxx   , xxxxx      , xxxxx    , xxxxx     , xxxxx
+                                        , KC_ENT  , CL(KC_D)   , xxxxx    , xxxxx     , MO(Base)
                  , KC_HOME , KC_END
                  , KC_PGUP
                  , KC_PGDN , KC_LEFT  , KC_RGHT
                  )
-, [Clip] = KEYMAP( _____   , xxxxx      , xxxxx   , xxxxx     , xxxxx   , xxxxx   , _____
-                 , _____   , xxxxx      , KC_UP   , CL(KC_D)  , xxxxx   , KC_T    , _____
-                 , _____   , M(C_bucket), JA_RBRC , M(C_add_l), CL(KC_Z), M(C_transpa)
-                 , _____   , M(C_delete), JA_LBRC , M(C_del_l), CL(KC_Y), KC_E    , _____
-                 , _____   , _____      , _____   , _____     , _____
-                                                                        , CL(KC_H), CL(KC_S)
-                                                                                  , xxxxx
-                                                              , KC_MINS , JA_HAT  , S(CL(KC_H))
-                 /*      ^^ LEFT ^^      /      vv RIGHT vv      */
-                 , _____   , xxxxx      , xxxxx   , xxxxx     , xxxxx   , xxxxx   , _____
-                 , _____   , xxxxx      , xxxxx   , xxxxx     , xxxxx   , xxxxx   , _____
-                           , _____      , _____   , _____     , _____   , xxxxx   , xxxxx
-                 , _____   , xxxxx      , KC_P    , xxxxx     , xxxxx   , xxxxx   , xxxxx
-                                        , KC_ENT  , xxxxx     , xxxxx   , xxxxx   , MO(Base)
+, [Clip] = KEYMAP( _____   , xxxxx      , xxxxx   , xxxxx      , xxxxx    , xxxxx     , _____
+                 , _____   , xxxxx      , xxxxx   , M(C_autol) , xxxxx    , KC_T      , _____
+                 , _____   , M(C_bucket), JA_RBRC , M(C_add_l) , CL(KC_Z) , M(C_voPen)
+                 , _____   , M(C_delete), JA_LBRC , M(C_del_l) , CL(KC_Y) , KC_E      , _____
+                 , _____   , _____      , _____   , CL(KC_D)   , _____
+                                                                          , CL(KC_H)  , CL(KC_S)
+                                                                                      , xxxxx
+                                                               , M(C_rotL), M(C_rotR) , S(CL(KC_H))
+                 /*      ^^ LEFT ^^      /      vv RIGHT vv       */
+                 , _____   , xxxxx      , xxxxx   , xxxxx      , xxxxx    , xxxxx     , _____
+                 , _____   , xxxxx      , xxxxx   , xxxxx      , xxxxx    , xxxxx     , _____
+                           , _____      , _____   , _____      , _____    , xxxxx     , xxxxx
+                 , _____   , xxxxx      , KC_P    , xxxxx      , xxxxx    , xxxxx     , xxxxx
+                                        , KC_ENT  , xxxxx      , xxxxx    , xxxxx     , MO(Base)
                  , KC_HOME , KC_END
                  , KC_PGUP
                  , KC_PGDN , KC_LEFT  , KC_RGHT
                  )
 };
+
 
 const uint16_t PROGMEM fn_actions[] = {
     [1] = ACTION_LAYER_TAP_TOGGLE(Media)                // Media - Momentary Layer 1 (Media)
@@ -186,6 +194,7 @@ const uint16_t PROGMEM fn_actions[] = {
 static uint16_t start;
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 { // MACRODOWN only works in this function
+    uint8_t curr_lay = biton32(layer_state);
     switch(id) {
         case Dummy:
             if (record->event.pressed) /* 押したとき */ register_code(KC_RSFT);
@@ -201,26 +210,79 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     return MACRO(D(LCTL), T(C), U(LCTL), END);
             }
             break;
+
+        // to draw
         case C_bucket:
-            if (record->event.pressed)
-                return MACRO(D(G), W(800), END);
-            else
-                return MACRO(U(G), D(LCTL), T(D), U(LCTL), END);
+            if (curr_lay == Sai){
+                return MACRO(D(LALT), T(DEL), U(LALT), END);
+            } else if(curr_lay == Clip) {
+                if (record->event.pressed)
+                    return MACRO(D(G), W(800), END);
+                else
+                    return MACRO(U(G), D(LCTL), T(D), U(LCTL), END);
+            }
             break;
         case C_delete:
-            if (record->event.pressed)
-                return MACRO(T(DEL), D(LCTL), T(D), U(LCTL), END);
+            if (curr_lay == Sai){
+                return MACRO(T(DEL), END);
+            } else if(curr_lay == Clip) {
+                if (record->event.pressed)
+                    return MACRO(T(DEL), D(LCTL), T(D), U(LCTL), END);
+            }
+            break;
+        case C_outLn:
+            if (curr_lay == Sai){
+                if (!record->event.pressed)
+                    return MACRO(D(LALT), T(L), T(U), U(LALT), T(ENT));
+            } else if(curr_lay == Clip) {
+                // TODO
+            }
+            break;
+        case C_autol:
+            if (curr_lay == Sai){
+                if (record->event.pressed) return MACRO(D(W)  , D(LSFT), END);
+                else                       return MACRO(W(200), U(LSFT), U(W), END);
+            } else if(curr_lay == Clip) {
+                // TODO
+            }
             break;
         case C_add_l:
-            if (record->event.pressed) return MACRO(D(M), D(LSFT), END);
-            else                       return MACRO(W(200), U(LSFT), U(M), END);
+            if (curr_lay == Sai){
+                if (record->event.pressed) return MACRO(D(L)  , D(LSFT), END);
+                else                       return MACRO(W(200), U(LSFT), U(L), END);
+            } else if (curr_lay == Clip){
+                if (record->event.pressed) return MACRO(D(M)  , D(LSFT), END);
+                else                       return MACRO(W(200), U(LSFT), U(M), END);
+            }
             break;
         case C_del_l:
-            if (record->event.pressed) return MACRO(D(M), D(LALT), END);
-            else                       return MACRO(W(200), U(LALT), U(M), END);
+            if (curr_lay == Sai){
+                if (record->event.pressed) return MACRO(D(L)  , D(LALT), END);
+                else                       return MACRO(W(200), U(LALT), U(L), END);
+            } else if (curr_lay == Clip){
+                if (record->event.pressed) return MACRO(D(M)  , D(LALT), END);
+                else                       return MACRO(W(200), U(LALT), U(M), END);
+            }
             break;
-        case C_transpa:
-            return MACRO(T(C), END);
+        case C_voPen:
+            if (curr_lay == Sai)
+                return MACRO(T(MINS), END);
+            else if (curr_lay == Clip)
+                return MACRO(T(C), END);
+            break;
+        case C_rotL:
+            if (curr_lay == Sai)
+                if (!record->event.pressed)
+                    return MACRO(D(LSFT), T(PGUP), U(LSFT), END);
+            else if (curr_lay == Clip)
+                return MACRO(T(MINS), END);
+            break;
+        case C_rotR:
+            if (curr_lay == Sai)
+                if (!record->event.pressed)
+                    return MACRO(D(LSFT), T(PGDN), U(LSFT), END);
+            else if (curr_lay == Clip)
+                return MACRO(T(CIRC), END);
             break;
         default:
             break;
