@@ -34,8 +34,8 @@ enum Macro_stat{ Dummy
                , T_arr
                , T_ar2
                // to draw
-               , C_bucket
                , C_delete
+               , C_bucket
                , C_outLn
                , C_autol
                , C_add_l
@@ -153,8 +153,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
  */
 , [Sai] =  KEYMAP( _____   , xxxxx      , xxxxx   , xxxxx      , xxxxx    , xxxxx     , _____
                  , _____   , M(C_outLn) , xxxxx   , M(C_autol) , xxxxx    , KC_T      , _____
-                 , _____   , M(C_bucket), JA_RBRC , M(C_add_l) , CL(KC_Z) , M(C_voPen)
-                 , _____   , M(C_delete), JA_LBRC , M(C_del_l) , CL(KC_Y) , KC_E      , _____
+                 , _____   , M(C_delete), JA_RBRC , M(C_add_l) , CL(KC_Z) , M(C_voPen)
+                 , _____   , M(C_bucket), JA_LBRC , M(C_del_l) , CL(KC_Y) , KC_E      , _____
                  , _____   , _____      , _____   , CL(KC_D)   , _____
                                                                           , KC_H      , CL(KC_S)
                                                                                       , xxxxx
@@ -171,8 +171,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                  )
 , [Clip] = KEYMAP( _____   , xxxxx      , xxxxx   , xxxxx      , xxxxx    , xxxxx     , _____
                  , _____   , xxxxx      , xxxxx   , M(C_autol) , xxxxx    , KC_T      , _____
-                 , _____   , M(C_bucket), JA_RBRC , M(C_add_l) , CL(KC_Z) , M(C_voPen)
-                 , _____   , M(C_delete), JA_LBRC , M(C_del_l) , CL(KC_Y) , KC_E      , _____
+                 , _____   , M(C_delete), JA_RBRC , M(C_add_l) , CL(KC_Z) , M(C_voPen)
+                 , _____   , M(C_bucket), JA_LBRC , M(C_del_l) , CL(KC_Y) , KC_E      , _____
                  , _____   , _____      , _____   , CL(KC_D)   , _____
                                                                           , CL(KC_H)  , CL(KC_S)
                                                                                       , xxxxx
@@ -234,6 +234,17 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             }
             break;
         // to draw
+        case C_delete:
+            if (curr_lay == Sai){
+                if (record->event.pressed)
+                    return MACRO(T(DEL), END);
+                else
+                    return MACRO(D(LCTL), T(D), U(LCTL),END);
+            } else if(curr_lay == Clip) {
+                if (record->event.pressed)
+                    return MACRO(T(DEL), D(LCTL), T(D), U(LCTL), END);
+            }
+            break;
         case C_bucket:
             if (curr_lay == Sai){
                 return MACRO(D(LALT), T(DEL), U(LALT), END);
@@ -242,14 +253,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     return MACRO(D(G), W(800), END);
                 else
                     return MACRO(U(G), D(LCTL), T(D), U(LCTL), END);
-            }
-            break;
-        case C_delete:
-            if (curr_lay == Sai){
-                return MACRO(T(DEL), END);
-            } else if(curr_lay == Clip) {
-                if (record->event.pressed)
-                    return MACRO(T(DEL), D(LCTL), T(D), U(LCTL), END);
             }
             break;
         case C_outLn:
