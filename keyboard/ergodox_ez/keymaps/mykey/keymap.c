@@ -30,6 +30,8 @@ enum Layer_names{ Base
 enum Macro_stat{ Dummy
                // common
                , Cut_paste
+               , T_arr
+               , T_ar2
                // to draw
                , C_bucket
                , C_delete
@@ -54,14 +56,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
  * |--------+------+------+------+------+------| copy |           |      |------+------+------+------+------+--------|
  * | LShift | Z    | X    | C    | V    | B    | /cut |           | ^~   | N    | M    | ,<   | .>   | /?   | \_ /Sft|
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | Enter| [{   | ]}   | Alt  | BS   |                                       | Enter| Lf   | Dn   | Up   | Ri   |
+ *   | Enter| [{   | ]}   | Alt  | BS   |                                       | Enter| Right|      |      | Dollr |
  *   `----------------------------------'                                       `----------------------------------'
  *                                      ,-------------.           ,-------------.
  *                                      |      | save |           | Home | End  |
  *                               ,------|------|------|           |------+--------+------.
- *                               |      |      |      |           | PgUp |        |      |
- *                               | Space| Tab  |------|           |------| Space  |      |
- *                               | /Lyr1|      | Del  |           | PgDn |        |      |
+ *                               |      |      |      |           | Up   |        |      |
+ *                               | Space| Tab  |------|           |------| Left   | Space|
+ *                               | /Lyr1|      | Del  |           | Dn   |        | /Lyr1|
  *                               `--------------------'           `----------------------'
  */
 { [Base] = KEYMAP( KC_ESC  , KC_1    , KC_2    , KC_3    , KC_4    , KC_5    , KC_GRV //MT(KC_LANG1, KC_LANG2)
@@ -78,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                  , JA_AT   , KC_Y    , KC_U    , KC_I    , KC_O    , KC_P    , KC_MINS
                            , KC_H    , KC_J    , KC_K    , KC_L    , KC_SCLN , CTL_T(JA_CLON)
                  , JA_HAT  , KC_N    , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , SFT_T(JA_ENUN)
-                                     , KC_ENT  , KC_RGHT , xxxxx   , xxxxx   , xxxxx
+                                     , KC_ENT  , KC_RGHT , xxxxx   , xxxxx   , KC_DLR
                  , KC_HOME , KC_END
                  , KC_UP
                  , KC_DOWN , KC_LEFT , LT(Media, KC_SPC)
@@ -107,18 +109,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
  *                               `--------------------'           `----------------------'
  */
 , [Media] = KEYMAP( _____   , KC_F1   , KC_F3   , KC_F6    , KC_F8    , KC_F9   , _____
-                  , _____   , xxxxx   , KC_BTN1 , KC_MS_U  , KC_BTN2  , xxxxx   , _____
+                  , _____   , xxxxx   , KC_BTN1 , KC_MS_U  , KC_BTN2  , xxxxx   , KC_WH_U
                   , _____   , xxxxx   , KC_MS_L , KC_MS_D  , KC_MS_R  , xxxxx
-                  , _____   , KC_F2   , KC_F4   , TC(KC_F5), KC_F7    , KC_F10  , _____
+                  , _____   , KC_F2   , KC_F4   , TC(KC_F5), KC_F7    , KC_F10  , KC_WH_D
                   , RESET   , _____   , _____   , _____    , _____
                                                                       , xxxxx   , xxxxx
                                                                                 , xxxxx
                                                            , _____    , xxxxx   , _____
                   /*      ^^ LEFT ^^      /      vv RIGHT vv      */
                   , TG(Base), KC_F11  , KC_F12  , KC_F13   , KC_F14   , KC_F15  , TG(Sai)
-                  , KC_WH_U , xxxxx   , xxxxx   , xxxxx    , xxxxx    , xxxxx   , TG(Clip)
+                  , M(T_ar2), xxxxx   , xxxxx   , xxxxx    , xxxxx    , xxxxx   , TG(Clip)
                             , KC_LEFT , KC_DOWN , KC_UP    , KC_RGHT  , xxxxx   , xxxxx
-                  , KC_WH_D , KC_GRV  , xxxxx   , xxxxx    , xxxxx    , xxxxx   , xxxxx
+                  , M(T_arr), KC_GRV  , xxxxx   , xxxxx    , xxxxx    , xxxxx   , xxxxx
                                       , _____   , KC_END   , _____    , _____   , _____
                   , _____   , _____
                   , KC_PGUP
@@ -210,7 +212,26 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     return MACRO(D(LCTL), T(C), U(LCTL), END);
             }
             break;
-
+        case T_arr:
+            if (record->event.pressed) {
+                start = timer_read();
+            } else {
+                if (300 <= timer_elapsed(start)) // 150ms以上なら =>
+                    return MACRO(T(PEQL), D(LSFT), T(DOT), U(LSFT), END);
+                else                             // 150ms未満なら ->
+                    return MACRO(T(MINS), D(LSFT), T(DOT), U(LSFT), END);
+            }
+            break;
+        case T_ar2:
+            if (record->event.pressed) {
+                start = timer_read();
+            } else {
+                if (300 <= timer_elapsed(start)) // 150ms以上なら <<=
+                    return MACRO(D(LSFT), T(COMM), T(COMM), U(LSFT), T(PEQL), END);
+                else                             // 150ms未満なら >>=
+                    return MACRO(D(LSFT), T(DOT), T(DOT), U(LSFT), T(PEQL), END);
+            }
+            break;
         // to draw
         case C_bucket:
             if (curr_lay == Sai){
