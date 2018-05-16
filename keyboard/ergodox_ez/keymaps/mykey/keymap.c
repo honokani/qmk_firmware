@@ -5,6 +5,7 @@
 #define JA_CLON KC_QUOT  // : and +
 #define JA_AT   KC_LBRC  // @ and `
 #define JA_HAT  KC_EQL   // ^ and ~
+
 #define JA_ENUN KC_RO    // \ and _ (EN mark and UNder score)
 #define JA_ENVL KC_JYEN  // \ and | (EN mark and Vertical Line)
 #define JA_LBRC KC_RBRC  // [ and {
@@ -217,7 +218,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                 start = timer_read();
             } else {
                 if (300 <= timer_elapsed(start)) // 150ms以上なら =>
-                    return MACRO(T(PEQL), D(LSFT), T(DOT), U(LSFT), END);
+                    return MACRO(D(LSFT), T(MINS), T(DOT), U(LSFT), END);
                 else                             // 150ms未満なら ->
                     return MACRO(T(MINS), D(LSFT), T(DOT), U(LSFT), END);
             }
@@ -226,10 +227,10 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             if (record->event.pressed) {
                 start = timer_read();
             } else {
-                if (300 <= timer_elapsed(start)) // 150ms以上なら <<=
-                    return MACRO(D(LSFT), T(COMM), T(COMM), U(LSFT), T(PEQL), END);
+                if (300 <= timer_elapsed(start)) // 150ms以上なら =<<
+                    return MACRO(D(LSFT), T(MINS), T(COMM), T(COMM), U(LSFT), END);
                 else                             // 150ms未満なら >>=
-                    return MACRO(D(LSFT), T(DOT), T(DOT), U(LSFT), T(PEQL), END);
+                    return MACRO(D(LSFT), T(DOT), T(DOT), T(MINS), U(LSFT), END);
             }
             break;
         // to draw
