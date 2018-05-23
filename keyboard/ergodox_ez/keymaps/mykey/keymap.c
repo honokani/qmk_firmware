@@ -30,7 +30,9 @@ enum Layer_names{ Base
                 };
 enum Macro_stat{ Dummy
                // common
-               , Cut_paste
+               , K_cut_copy
+               , K_bucket
+               , K_bucke2
                , T_arr
                , T_ar2
                // to draw
@@ -68,13 +70,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
  *                               `--------------------'           `----------------------'
  */
 { [Base] = KEYMAP( KC_ESC  , KC_1    , KC_2    , KC_3    , KC_4    , KC_5    , KC_GRV //MT(KC_LANG1, KC_LANG2)
-                 , KC_TAB  , KC_Q    , KC_W    , KC_E    , KC_R    , KC_T    , CL(KC_V)
+                 , KC_TAB  , KC_Q    , KC_W    , KC_E    , KC_R    , KC_T    , M(K_bucke2)
                  , KC_LCTL , KC_A    , KC_S    , KC_D    , KC_F    , KC_G
-                 , KC_LSFT , KC_Z    , KC_X    , KC_C    , KC_V    , KC_B    , M(Cut_paste)
-                 , KC_ENT  , JA_LBRC , JA_RBRC , KC_LALT , KC_BSPC
+                 , KC_LSFT , KC_Z    , KC_X    , KC_C    , KC_V    , KC_B    , M(K_bucket)
+                 , KC_ENT  , JA_LBRC , JA_RBRC , KC_LALT , LT(Media, KC_SPC)
                                                                    , xxxxx   , CL(KC_S)
-                                                                             , xxxxx
-                                               , LT(Media, KC_SPC) , KC_TAB  , KC_DELT
+                                                                             , CL(KC_V)
+                                                         , KC_BSPC , KC_DELT , M(K_cut_copy)
 
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
                  , CL(KC_Z), KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , JA_ENVL
@@ -82,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                            , KC_H    , KC_J    , KC_K    , KC_L    , KC_SCLN , CTL_T(JA_CLON)
                  , JA_HAT  , KC_N    , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , SFT_T(JA_ENUN)
                                      , KC_ENT  , KC_RGHT , xxxxx   , xxxxx   , KC_DLR
-                 , KC_HOME , KC_END
+                 , KC_LEFT , KC_RGHT
                  , KC_UP
                  , KC_DOWN , KC_LEFT , LT(Media, KC_SPC)
                  )
@@ -123,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                             , KC_LEFT , KC_DOWN , KC_UP    , KC_RGHT  , xxxxx   , xxxxx
                   , M(T_arr), KC_GRV  , xxxxx   , xxxxx    , xxxxx    , xxxxx   , xxxxx
                                       , _____   , KC_END   , _____    , _____   , _____
-                  , _____   , _____
+                  , KC_HOME , KC_END
                   , KC_PGUP
                   , KC_PGDN , KC_HOME , _____
                   )
@@ -203,7 +205,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             if (record->event.pressed) /* 押したとき */ register_code(KC_RSFT);
             else                       /* 離したとき */ unregister_code(KC_RSFT);
             break;
-        case Cut_paste:
+        case K_cut_copy:
             if (record->event.pressed) {
                 start = timer_read();
             } else {
@@ -213,12 +215,32 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     return MACRO(D(LCTL), T(C), U(LCTL), END);
             }
             break;
+        case K_bucket:
+            if (record->event.pressed) {
+                start = timer_read();
+            } else {
+                if (300 <= timer_elapsed(start)) // 150ms以上なら [
+                    return MACRO(T(BSLS), END);
+                else                             // 150ms未満なら ]
+                    return MACRO(T(RBRC), END);
+            }
+            break;
+        case K_bucke2:
+            if (record->event.pressed) {
+                start = timer_read();
+            } else {
+                if (300 <= timer_elapsed(start)) // 150ms以上なら (
+                    return MACRO(D(LSFT), T(9) ,U(LSFT), END);
+                else                             // 150ms未満なら )
+                    return MACRO(D(LSFT), T(8) ,U(LSFT), END);
+            }
+            break;
         case T_arr:
             if (record->event.pressed) {
                 start = timer_read();
             } else {
-                if (300 <= timer_elapsed(start)) // 150ms以上なら =>
-                    return MACRO(D(LSFT), T(MINS), T(DOT), U(LSFT), END);
+                if (300 <= timer_elapsed(start)) // 150ms以上なら <-
+                    return MACRO(D(LSFT), T(COMM), U(LSFT), T(MINS), END);
                 else                             // 150ms未満なら ->
                     return MACRO(T(MINS), D(LSFT), T(DOT), U(LSFT), END);
             }
