@@ -73,10 +73,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                  , KC_TAB  , KC_Q    , KC_W    , KC_E    , KC_R    , KC_T    , M(K_bucke2)
                  , KC_LCTL , KC_A    , KC_S    , KC_D    , KC_F    , KC_G
                  , KC_LSFT , KC_Z    , KC_X    , KC_C    , KC_V    , KC_B    , M(K_bucket)
-                 , KC_ENT  , JA_LBRC , JA_RBRC , KC_LALT , LT(Media, KC_SPC)
+                 , KC_ENT  , JA_LBRC , JA_RBRC , KC_LALT , KC_BSPC
                                                                    , xxxxx   , CL(KC_S)
                                                                              , CL(KC_V)
-                                                         , KC_BSPC , KC_DELT , M(K_cut_copy)
+                                               , LT(Media, KC_SPC) , KC_DELT , M(K_cut_copy)
 
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
                  , CL(KC_Z), KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , JA_ENVL
@@ -112,8 +112,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
  *                               `--------------------'           `----------------------'
  */
 , [Media] = KEYMAP( _____   , KC_F1   , KC_F3   , KC_F6    , KC_F8    , KC_F9   , _____
-                  , _____   , xxxxx   , KC_BTN1 , KC_MS_U  , KC_BTN2  , xxxxx   , KC_WH_U
-                  , _____   , xxxxx   , KC_MS_L , KC_MS_D  , KC_MS_R  , xxxxx
+                  , _____   , xxxxx   , xxxxx   , KC_BTN1  , KC_MS_U  , KC_BTN2 , KC_WH_U
+                  , _____   , xxxxx   , xxxxx   , KC_MS_L  , KC_MS_D  , KC_MS_R 
                   , _____   , KC_F2   , KC_F4   , TC(KC_F5), KC_F7    , KC_F10  , KC_WH_D
                   , RESET   , _____   , _____   , _____    , _____
                                                                       , xxxxx   , xxxxx
