@@ -18,6 +18,8 @@
 #define _____   KC_TRNS
 #define xxxxx   KC_NO
 
+#define TGSPACE LT(Media, KC_SPC)
+
 /*
 #define Base 0  // layer: default
 #define Media 1  // layer: Media
@@ -59,14 +61,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
  * |--------+------+------+------+------+------| copy |           |      |------+------+------+------+------+--------|
  * | LShift | Z    | X    | C    | V    | B    | /cut |           | ^~   | N    | M    | ,<   | .>   | /?   | \_ /Sft|
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | Enter| [{   | ]}   | Alt  | BS   |                                       | Enter| Right|      |      | Dollr |
+ *   | Enter| [{   | ]}   | Alt  | BS   |                                       | Enter|TSpace|      |      | Dollr |
  *   `----------------------------------'                                       `----------------------------------'
  *                                      ,-------------.           ,-------------.
  *                                      |      | save |           | Home | End  |
  *                               ,------|------|------|           |------+--------+------.
  *                               |      |      |      |           | Up   |        |      |
- *                               | Space| Tab  |------|           |------| Left   | Space|
- *                               | /Lyr1|      | Del  |           | Dn   |        | /Lyr1|
+ *                               | Space| Tab  |------|           |------| Left   | Right|
+ *                               | /Lyr1|      | Del  |           | Dn   |        |      |
  *                               `--------------------'           `----------------------'
  */
 { [Base] = KEYMAP( KC_ESC  , KC_1    , KC_2    , KC_3    , KC_4    , KC_5    , KC_GRV //MT(KC_LANG1, KC_LANG2)
@@ -76,17 +78,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                  , KC_ENT  , JA_LBRC , JA_RBRC , KC_LALT , KC_BSPC
                                                                    , xxxxx   , CL(KC_S)
                                                                              , CL(KC_V)
-                                               , LT(Media, KC_SPC) , KC_DELT , M(K_cut_copy)
+                                               , TGSPACE , KC_DELT , M(K_cut_copy)
 
                  /*      ^^ LEFT ^^      /      vv RIGHT vv      */
                  , CL(KC_Z), KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , JA_ENVL
                  , JA_AT   , KC_Y    , KC_U    , KC_I    , KC_O    , KC_P    , KC_MINS
                            , KC_H    , KC_J    , KC_K    , KC_L    , KC_SCLN , CTL_T(JA_CLON)
                  , JA_HAT  , KC_N    , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , SFT_T(JA_ENUN)
-                                     , KC_ENT  , KC_RGHT , xxxxx   , xxxxx   , KC_DLR
-                 , KC_LEFT , KC_RGHT
+                                     , KC_ENT  , TGSPACE , xxxxx   , xxxxx   , KC_DLR
+                 , KC_HOME , KC_END
                  , KC_UP
-                 , KC_DOWN , KC_LEFT , LT(Media, KC_SPC)
+                 , KC_DOWN , KC_LEFT , KC_RGHT
                  )
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -124,10 +126,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
                   , M(T_ar2), xxxxx   , xxxxx   , xxxxx    , xxxxx    , xxxxx   , TG(Clip)
                             , KC_LEFT , KC_DOWN , KC_UP    , KC_RGHT  , xxxxx   , xxxxx
                   , M(T_arr), KC_GRV  , xxxxx   , xxxxx    , xxxxx    , xxxxx   , xxxxx
-                                      , _____   , KC_END   , _____    , _____   , _____
+                                      , _____   , _____    , _____    , _____   , _____
                   , KC_HOME , KC_END
                   , KC_PGUP
-                  , KC_PGDN , KC_HOME , _____
+                  , KC_PGDN , _____   , _____
                   )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
