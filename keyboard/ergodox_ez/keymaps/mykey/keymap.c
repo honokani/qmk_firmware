@@ -113,11 +113,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
  *                               |      |      |      |           | PgDn | Left   | Right
  *                               `--------------------'           `----------------------'
  */
-, [Media] = KEYMAP( _____   , KC_F1   , KC_F3   , KC_F6    , KC_F8    , KC_F9   , _____
+, [Media] = KEYMAP( _____   , KC_F1   , KC_F3   , KC_F6    , KC_F8    , KC_F9   , RESET
                   , _____   , xxxxx   , xxxxx   , KC_BTN1  , KC_MS_U  , KC_BTN2 , KC_WH_U
                   , _____   , xxxxx   , xxxxx   , KC_MS_L  , KC_MS_D  , KC_MS_R 
                   , _____   , KC_F2   , KC_F4   , TC(KC_F5), KC_F7    , KC_F10  , KC_WH_D
-                  , RESET   , _____   , _____   , _____    , _____
+                  , KC_ENT  , _____   , _____   , _____    , _____
                                                                       , xxxxx   , xxxxx
                                                                                 , xxxxx
                                                            , _____    , xxxxx   , _____
