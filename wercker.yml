@@ -1,28 +1,24 @@
 box: 
-  id: ymotongpoo/ubuntu-trusty:wercker
+  id: ymotongpoo/qmk_firmware
 
 build:
   steps: 
     - script:
-        name: confirm docker image version.
-        code: |
-          cat /etc/lsb-release && uname -a
-    - script:
         name: build default keymap.
-        cwd: $WERCKER_SOURCE_DIR/keyboard/ergodox_ez
+        cwd: $WERCKER_SOURCE_DIR
         code: |
-          make clean && make KEYMAP=$TARGET_KEYMAP
+          make ergodox_ez:$TARGET_KEYMAP
     - script:
         name: move built firmware to output dir.
-        cwd: $WERCKER_SOURCE_DIR/keyboard/ergodox_ez
+        cwd: $WERCKER_SOURCE_DIR/.build
         code: |
-          mv ergodox_ez.hex $WERCKER_OUTPUT_DIR
+          mv ergodox_ez_$TARGET_KEYMAP.hex $WERCKER_OUTPUT_DIR/ergodox.hex
 deploy:
   steps:
     - script:
         name: put built hex file to bintray.
         code: |
-          curl -T $WERCKER_SOURCE_DIR/ergodox_ez.hex -u$BINTRAY_USERNAME:$BINTRAY_APIKEY https://api.bintray.com/content/$BINTRAY_USERNAME/generic/ergodox.hex/$WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT/ergodox.hex
+          curl -T $WERCKER_SOURCE_DIR/ergodox.hex -u$BINTRAY_USERNAME:$BINTRAY_APIKEY https://api.bintray.com/content/$BINTRAY_USERNAME/generic/ergodox.hex/$WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT/ergodox.hex
     - script:
         name: publish uploaded hex file.
         code: |

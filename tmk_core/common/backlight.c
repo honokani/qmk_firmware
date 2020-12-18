@@ -28,6 +28,9 @@ void backlight_init(void)
         eeconfig_init();
     }
     backlight_config.raw = eeconfig_read_backlight();
+    if (backlight_config.level > BACKLIGHT_LEVELS) {
+       backlight_config.level = BACKLIGHT_LEVELS;
+    }
     backlight_set(backlight_config.enable ? backlight_config.level : 0);
 }
 
@@ -36,9 +39,9 @@ void backlight_increase(void)
     if(backlight_config.level < BACKLIGHT_LEVELS)
     {
         backlight_config.level++;
-        backlight_config.enable = 1;
-        eeconfig_write_backlight(backlight_config.raw);
     }
+    backlight_config.enable = 1;
+    eeconfig_update_backlight(backlight_config.raw);
     dprintf("backlight increase: %u\n", backlight_config.level);
     backlight_set(backlight_config.level);
 }
@@ -49,7 +52,7 @@ void backlight_decrease(void)
     {
         backlight_config.level--;
         backlight_config.enable = !!backlight_config.level;
-        eeconfig_write_backlight(backlight_config.raw);
+        eeconfig_update_backlight(backlight_config.raw);
     }
     dprintf("backlight decrease: %u\n", backlight_config.level);
     backlight_set(backlight_config.level);
@@ -58,7 +61,9 @@ void backlight_decrease(void)
 void backlight_toggle(void)
 {
     backlight_config.enable ^= 1;
-    eeconfig_write_backlight(backlight_config.raw);
+    if (backlight_config.raw == 1) // enabled but level = 0
+        backlight_config.level = 1;
+    eeconfig_update_backlight(backlight_config.raw);
     dprintf("backlight toggle: %u\n", backlight_config.enable);
     backlight_set(backlight_config.enable ? backlight_config.level : 0);
 }
@@ -71,15 +76,22 @@ void backlight_step(void)
         backlight_config.level = 0;
     }
     backlight_config.enable = !!backlight_config.level;
-    eeconfig_write_backlight(backlight_config.raw);
+    eeconfig_update_backlight(backlight_config.raw);
     dprintf("backlight step: %u\n", backlight_config.level);
     backlight_set(backlight_config.level);
 }
 
 void backlight_level(uint8_t level)
 {
-    backlight_config.level ^= level;
+    if (level > BACKLIGHT_LEVELS)
+        level = BACKLIGHT_LEVELS;
+    backlight_config.level = level;
     backlight_config.enable = !!backlight_config.level;
-    eeconfig_write_backlight(backlight_config.raw);
+    eeconfig_update_backlight(backlight_config.raw);
     backlight_set(backlight_config.level);
+}
+
+uint8_t get_backlight_level(void)
+{
+    return backlight_config.level;
 }
